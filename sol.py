@@ -5,42 +5,40 @@ data = [{"electorate": 3100, "Money": 1050000},
         {"electorate": 2400, "Money": 600000}]
 
 
-def find_voice_cost(arr):
-    c_arr = []
+def my_min(arr):
+    min = data[0]['Money']
     for i in arr:
-        c_arr.append(i['Money']/i['electorate'])
-    return c_arr
+        if min > i['Money']:
+            min = i['Money']
+    return min
 
-def my_min(val,arr):
+def max_v(arr):
+    max = 0
     for i in arr:
-        if val <= i:
-            return True
-        else:
-            return False
+        if max < i['electorate']:
+            max = i['electorate']
+            el = i
+    return el
+
+
 res = []
-cheep_v = find_voice_cost(data)
+
 def find_max(x,cash = 3000000):
     max = 0
-    min = 0
-    voice = 0
-    money = 0
     for i in x:
         if cash - i["Money"] < 0:
             return res
-    else:
-        for i in x:
-            if cash - i["Money"] > max and my_min(i["Money"]/i["electorate"], cheep_v):
-                max = cash - i["Money"]
-                voice = i["electorate"]
-                money = i["Money"]
-                ch1 = i["Money"]/i["electorate"]
-        ch = {"electorate": voice, "Money": money}
-        res.append(ch)
-        #print(res)
-        data.remove(ch)
-        cheep_v.remove(ch1)
-        #print(cheep_v)
-        find_max(data, cash=max)
+
+    for i in x:
+        if cash - i["Money"] > max:
+            max = cash - i["Money"]
+            if cash - i["Money"] > my_min(data):
+                ch = i
+            else:
+                ch = max_v(data)
+    res.append(ch)
+    data.remove(ch)
+    find_max(data, cash=max)
 
 if __name__ == '__main__':
     find_max(data)
