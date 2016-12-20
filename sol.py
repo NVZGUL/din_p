@@ -29,9 +29,8 @@ res = []
 #РЕАЛИЗОВАН В ВИДЕ РЕКУРСИИ
 def find_max(x,cash = 3000000):
     max = 0
-    for i in x:
-        if cash - i["Money"] < 0:
-            return res
+    if cash < my_min(data) or len(data) == 0:
+        return res
 
     for i in x:
         if cash - i["Money"] > max:
